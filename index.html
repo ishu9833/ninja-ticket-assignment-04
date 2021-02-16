@@ -36,7 +36,7 @@
         </div>
 
 
-        <div class="booking-form">
+        <div class="booking-form" id="ticket-booking-form">
             <h3>Explore By Bus</h3>
 
             <div class="inputs">
@@ -105,7 +105,7 @@
                         <p>Charge 10% VAT</p>
                     </div>
                     <div class="right">
-                        <p>$<span>00</span></p>
+                        <p>$<span id="VAT">00</span></p>
                     </div>
                 </div>
                 <hr>
@@ -114,16 +114,18 @@
                         <h4>Total</h4>
                     </div>
                     <div class="right">
-                        <p>$<span>00</span> </p>
+                        <p>$<span id="grandTotal">00</span> </p>
                     </div>
                 </div>
             </div>
-            <button class="btn-style">Book Now</button>
+            <button class="btn-style"  id="bookingBtn">Book Now</button>
         </div>
     </main>
+    <div id="after-booking-page">
+        <h5>Congratulation! Your booking is placed.</h5>
+    </div>
 
     <script>
-
     
         function handleUpdateFirstClassTicket(ticket, isIncrease) {
             var ticketCount = document.getElementById(ticket +'-class');
@@ -155,19 +157,41 @@
             calculateSubTotal();
         }
 
+
+
+
         function calculateSubTotal(ticket) {
             const firstClassTicketPrice = getTicketPrice('first');
             const economyClassTicketPrice = getTicketPrice('economy')
 
             const subTotalPrice =  firstClassTicketPrice * 150 + economyClassTicketPrice * 100;
             document.getElementById('subTotalPrice').innerText = subTotalPrice;
+
+            const vat = subTotalPrice * 0.1
+            document.getElementById('VAT').innerText = vat;
+
+            const grandTotal = subTotalPrice + vat;
+            document.getElementById('grandTotal').innerText = grandTotal;
         }
+
+
+
 
         function getTicketPrice(ticket) {
             const ticketPrice = document.getElementById(ticket + '-class')
             const ticketCount = parseInt(ticketPrice.value)
-            return ticketPrice;
+            return ticketCount;
         }
+            
+            const bookingBtn = document.getElementById('bookingBtn');
+            bookingBtn.addEventListener('click', function(){
+                    const buyingForm = document.getElementById('ticket-booking-form');
+                    buyingForm.style.display = "none";
+                    const afterBookingPage = document.getElementById('after-booking-page');
+                    afterBookingPage.style.display = "block"
+            })
+            
+        
     </script>
 </body>
 
